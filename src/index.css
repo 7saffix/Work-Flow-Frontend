@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+  /* Core Blue & White Palette */
+  --color-brand-50: #eff6ff;   /* Background highlights */
+  --color-brand-100: #dbeafe;
+  --color-brand-500: #3b82f6;  /* Primary Blue */
+  --color-brand-600: #2563eb;  /* Hover Blue */
+  --color-brand-900: #1e3a8a;  /* Text/Headers Blue */
+
+  /* Neutrals for a clean White interface */
+  --color-surface: #ffffff;
+  --color-bg-main: #f8fafc;    /* Very light gray-blue to make white cards pop */
+  --color-border-thin: #e2e8f0;
+
+  /* Support colors for Inventory Logic */
+  --color-success: #10b981;    /* Emerald for Profit/Stock-In */
+  --color-danger: #ef4444;     /* Red for Expenses/Stock-Out */
+  
+  /* Typography & Layout */
+  --radius-standard: 0.5rem;
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-[--color-bg-main] text-slate-900 antialiased;
+  }
+}
