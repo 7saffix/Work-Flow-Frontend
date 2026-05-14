@@ -6,6 +6,7 @@ import { useGetProfile } from "./hooks/useGetProfile";
 import { useSelector } from "react-redux";
 import Loader from "./component/Loader";
 import { ProtectedRoute } from "./layouts/ProtectedRoute";
+import Products from "./pages/Product";
 
 function App() {
   const isInitializing = useGetProfile();
@@ -29,6 +30,7 @@ function App() {
         {/* Protected Area */}
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/product" element={<Products />} />
         </Route>
 
         {/* Catch-all */}
