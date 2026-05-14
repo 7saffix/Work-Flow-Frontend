@@ -7,12 +7,11 @@ export default function TopBar({ toggleSidebar }) {
   const { user } = useSelector((state) => state.user);
 
   const currentPage = location.pathname.split("/")[1];
-  console.log(currentPage);
 
   const handleLogout = async () => {};
 
   return (
-    <header className=" bg-color-surface border-b border-border-thin sticky top-0 z-30 p-4 flex items-center justify-between">
+    <header className=" bg-surface border-b border-border-thin sticky top-0 z-30 p-4 flex items-center justify-between">
       {/* Left: Menu Trigger & Breadcrumb */}
       <div className="flex items-center gap-4">
         <button

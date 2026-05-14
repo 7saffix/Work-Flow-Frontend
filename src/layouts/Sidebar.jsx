@@ -38,8 +38,8 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
 
       <aside
         className={`
-        fixed lg:sticky top-0 left-0 z-50 h-screen bg-color-surface border-r border-border-thin
-        transition-transform duration-300 w-72 flex flex-col
+        fixed lg:sticky top-0 left-0 z-50 h-screen bg-surface border-r border-border-thin
+        transition-transform duration-300 w-64 2xl:w-80 flex flex-col
         ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
       `}
       >
