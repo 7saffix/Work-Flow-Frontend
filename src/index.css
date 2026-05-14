@@ -21,10 +21,11 @@
   --radius-standard: 0.5rem;
   --font-sans: "Inter", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
-}
 
-@layer base {
-  body {
-    @apply bg-[--color-bg-main] text-slate-900 antialiased;
+  @keyframes loading {
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
   }
 }
+
