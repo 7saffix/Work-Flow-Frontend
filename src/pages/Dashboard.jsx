@@ -71,35 +71,35 @@ export default function Dashboard() {
       value: summary.totalSales || 0,
       icon: TrendingUp,
       color: "text-blue-600",
-      bg: "bg-blue-50",
+      bg: "bg-blue-100",
     },
     {
       label: "Inventory Value",
       value: summary.totalInventoryValue || 0,
       icon: Box,
       color: "text-emerald-600",
-      bg: "bg-emerald-50",
+      bg: "bg-emerald-100",
     },
     {
       label: "Purchases",
       value: summary.totalPurchases || 0,
       icon: ShoppingBag,
       color: "text-orange-600",
-      bg: "bg-orange-50",
+      bg: "bg-orange-100",
     },
     {
       label: "Expenses",
       value: summary.totalExpenses || 0,
       icon: Wallet,
       color: "text-red-600",
-      bg: "bg-red-50",
+      bg: "bg-red-100",
     },
   ];
 
   return (
     <div className="space-y-8 animate-in fade-in duration-700">
       {/* 1. KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className=" grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
         {kpiCards.map((card, i) => (
           <div
             key={i}

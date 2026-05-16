@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 import Loader from "./component/Loader";
 import { ProtectedRoute } from "./layouts/ProtectedRoute";
 import Products from "./pages/Product";
+import Brands from "./pages/Brand";
+import Categories from "./pages/Category";
 
 function App() {
   const isInitializing = useGetProfile();
@@ -31,6 +33,8 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/product" element={<Products />} />
+          <Route path="/brand" element={<Brands />} />
+          <Route path="/category" element={<Categories />} />
         </Route>
 
         {/* Catch-all */}
