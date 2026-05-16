@@ -49,7 +49,6 @@ export default function Products() {
       const productPayload = productRes.data?.data?.result;
       const totalPagesPayload = productRes?.data?.data?.meta?.totalPages || 1;
       const statsPayload = inventoryRes.data?.data || null;
-      console.log(totalPagesPayload);
 
       dispatch(
         setProductsData({
@@ -58,8 +57,6 @@ export default function Products() {
           totalPages: totalPagesPayload,
         }),
       );
-      console.log(totalPages);
-      console.log([...Array(totalPages)]);
     } catch (err) {
       console.error("Failed syncing inventory products collection:", err);
     } finally {

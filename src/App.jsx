@@ -9,6 +9,8 @@ import { ProtectedRoute } from "./layouts/ProtectedRoute";
 import Products from "./pages/Product";
 import Brands from "./pages/Brand";
 import Categories from "./pages/Category";
+import Suppliers from "./pages/Supplier";
+import Customers from "./pages/Customer";
 
 function App() {
   const isInitializing = useGetProfile();
@@ -35,6 +37,8 @@ function App() {
           <Route path="/product" element={<Products />} />
           <Route path="/brand" element={<Brands />} />
           <Route path="/category" element={<Categories />} />
+          <Route path="/supplier" element={<Suppliers />} />
+          <Route path="/customer" element={<Customers />} />
         </Route>
 
         {/* Catch-all */}
