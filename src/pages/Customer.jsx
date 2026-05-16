@@ -1,17 +1,9 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  User,
-  Phone,
-  MapPin,
-  Mail,
-  Save,
-  Loader2,
-  Plus,
-  X,
-} from "lucide-react";
+import { User, Phone, MapPin, Mail, Save, Plus, X } from "lucide-react";
 import api from "../redux/instance";
 import { setCustomersData } from "../redux/productSlice"; // adjust import path
+import Loader from "../component/Loader";
 
 export default function Customers() {
   const dispatch = useDispatch();
@@ -101,9 +93,8 @@ export default function Customers() {
 
         <div className="overflow-x-auto">
           {fetchLoading ? (
-            <div className="p-12 flex items-center justify-center gap-2 text-slate-400 font-medium text-sm">
-              <Loader2 size={16} className="animate-spin text-brand-500" />{" "}
-              Accessing database directories...
+            <div className="absolute inset-0  z-20 flex items-center justify-center ">
+              <Loader />
             </div>
           ) : customers.length === 0 ? (
             <div className="p-12 text-center text-slate-400 font-medium text-sm">

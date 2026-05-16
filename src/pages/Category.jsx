@@ -7,6 +7,7 @@ import {
   addCategory,
   setProductLoading,
 } from "../redux/productSlice";
+import Loader from "../component/Loader";
 
 export default function Categories() {
   const dispatch = useDispatch();
@@ -130,8 +131,8 @@ export default function Categories() {
         </div>
 
         {loading && (
-          <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px] z-20 flex items-center justify-center min-h-[200px]">
-            <div className="w-8 h-8 border-4 border-brand-200 border-t-brand-600 rounded-full animate-spin"></div>
+          <div className="absolute inset-0  z-20 flex items-center justify-center ">
+            <Loader />
           </div>
         )}
       </div>

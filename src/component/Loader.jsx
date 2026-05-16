@@ -16,7 +16,7 @@ export default function Loader() {
         {/* Loading Text */}
         <div className="mt-8 flex flex-col items-center gap-2">
           <span className="text-[--color-text-main] font-bold tracking-[0.2em] text-xs uppercase ml-1">
-            System Initializing
+            Initializing
           </span>
 
           {/* Progress Bar Track */}
