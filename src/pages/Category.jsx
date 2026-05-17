@@ -7,7 +7,6 @@ import {
   addCategory,
   setProductLoading,
 } from "../redux/productSlice";
-import Loader from "../component/Loader";
 
 export default function Categories() {
   const dispatch = useDispatch();
@@ -59,7 +58,7 @@ export default function Categories() {
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
+    <div className="p-4 sm:p-6 max-w-7xl mx-auto space-y-6 relative">
       {/* Header */}
       <div className="flex flex-col gap-5 sm:flex-row lg:items-center sm:justify-between">
         <div>
@@ -131,8 +130,10 @@ export default function Categories() {
         </div>
 
         {loading && (
-          <div className="absolute inset-0  z-20 flex items-center justify-center ">
-            <Loader />
+          <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] z-20 flex flex-col items-center justify-center gap-3">
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest animate-pulse">
+              Sync Data...
+            </p>
           </div>
         )}
       </div>

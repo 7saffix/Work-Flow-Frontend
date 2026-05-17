@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { User, Phone, MapPin, Mail, Save, Plus, X } from "lucide-react";
 import api from "../redux/instance";
 import { setCustomersData } from "../redux/productSlice"; // adjust import path
-import Loader from "../component/Loader";
 
 export default function Customers() {
   const dispatch = useDispatch();
@@ -61,7 +60,7 @@ export default function Customers() {
   };
 
   return (
-    <div className="p-4 sm:p-6 max-w-7xl mx-auto space-y-6">
+    <div className="p-4 sm:p-6 max-w-7xl mx-auto space-y-6 relative">
       {/* View Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -92,11 +91,7 @@ export default function Customers() {
         </div>
 
         <div className="overflow-x-auto">
-          {fetchLoading ? (
-            <div className="absolute inset-0  z-20 flex items-center justify-center ">
-              <Loader />
-            </div>
-          ) : customers.length === 0 ? (
+          {customers.length === 0 && !fetchLoading ? (
             <div className="p-12 text-center text-slate-400 font-medium text-sm">
               No registered client listings found.
             </div>
@@ -142,6 +137,14 @@ export default function Customers() {
           )}
         </div>
       </div>
+
+      {fetchLoading && (
+        <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] z-20 flex flex-col items-center justify-center gap-3">
+          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest animate-pulse">
+            Sync Data...
+          </p>
+        </div>
+      )}
 
       {/* ================= INLINE MODAL WINDOW MARKUP ================= */}
       {isOpen && (

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -10,7 +9,6 @@ import {
   Truck,
   Calculator,
   Save,
-  Loader2,
   Plus,
   X,
   Calendar,
@@ -45,60 +43,66 @@ export default function Purchase() {
   };
   const [formData, setFormData] = useState(initialFormState);
 
-  const loadLedgerSystemRecords = async () => {
-    setFetchLoading(true);
-    try {
-      const resHistory = await api.get("/purchase");
-      dispatch(setPurchasesData(resHistory.data?.data || []));
+  // Safe data synchronization pipeline
+  useEffect(() => {
+    let isMounted = true;
 
-      if (products.length === 0) {
-        const resProd = await api.get("/product/?limit=1000");
+    const loadLedgerSystemRecords = async () => {
+      if (isMounted) setFetchLoading(true);
+      try {
+        const resHistory = await api.get("/purchase");
+        dispatch(setPurchasesData(resHistory.data?.data || []));
 
-        dispatch(
-          setProductsData({
-            products: resProd.data?.data?.result || resProd.data?.data || [],
-            stats: resProd.data?.data?.stats || null,
-            totalPages: resProd.data?.data?.totalPages || 1,
-          }),
+        if (products.length === 0) {
+          const resProd = await api.get("/product/?limit=1000");
+          if (isMounted) {
+            dispatch(
+              setProductsData({
+                products:
+                  resProd.data?.data?.result || resProd.data?.data || [],
+                stats: resProd.data?.data?.stats || null,
+                totalPages: resProd.data?.data?.totalPages || 1,
+              }),
+            );
+          }
+        }
+
+        if (suppliers.length === 0) {
+          const resSupp = await api.get("/supplier");
+          if (isMounted) {
+            dispatch(
+              setSuppliersData(resSupp.data?.data || resSupp.data || []),
+            );
+          }
+        }
+      } catch (err) {
+        console.error(
+          "Critical: Procurement ledger population system failure:",
+          err,
         );
+      } finally {
+        if (isMounted) setFetchLoading(false);
       }
-      if (suppliers.length === 0) {
-        const resSupp = await api.get("/supplier");
-        dispatch(setSuppliersData(resSupp.data?.data || resSupp.data || []));
-      }
-    } catch (err) {
-      console.error("Critical: Ledger population system failure:", err);
-    } finally {
-      setFetchLoading(false);
-    }
-  };
+    };
 
-  useEffect(() => {
     loadLedgerSystemRecords();
-  }, []);
 
-  useEffect(() => {
-    const qty = Number(formData.quantity) || 0;
-    const price = Number(formData.unitPrice) || 0;
-    const vatValue = Number(formData.vat) || 0;
-    const discValue = Number(formData.discount) || 0;
-    const shipping = Number(formData.shippingCost) || 0;
+    return () => {
+      isMounted = false;
+    };
+  }, [dispatch, products.length, suppliers.length]);
 
-    const computedTotal = qty * price + vatValue - discValue + shipping;
+  // Synchronous dynamic formula execution matrix
+  const qty = Number(formData.quantity) || 0;
+  const price = Number(formData.unitPrice) || 0;
+  const vatValue = Number(formData.vat) || 0;
+  const discValue = Number(formData.discount) || 0;
+  const shipping = Number(formData.shippingCost) || 0;
 
-    setFormData((prev) => ({
-      ...prev,
-      totalPrice: computedTotal,
-    }));
-  }, [
-    formData.quantity,
-    formData.unitPrice,
-    formData.vat,
-    formData.discount,
-    formData.shippingCost,
-  ]);
+  const computedTotalPrice =
+    qty && price ? qty * price + vatValue - discValue + shipping : 0;
 
-  // 3. Form Submit execution utilizing cleaner "Fetch-After-Mutate" via Redux overwrites
+  // Form Submit Execution Pipeline
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -110,7 +114,7 @@ export default function Purchase() {
       vat: Number(formData.vat) || 0,
       discount: Number(formData.discount) || 0,
       shippingCost: Number(formData.shippingCost) || 0,
-      totalPrice: Number(formData.totalPrice),
+      totalPrice: computedTotalPrice,
     };
 
     try {
@@ -123,14 +127,14 @@ export default function Purchase() {
         dispatch(setPurchasesData(refreshHistory.data?.data || []));
       }
     } catch (err) {
-      console.error("Ledger write exception thrown:", err.response);
+      console.error("Procurement ledger write exception thrown:", err.response);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="p-4 sm:p-6 max-w-7xl mx-auto space-y-6">
+    <div className="p-4 sm:p-6 max-w-7xl mx-auto space-y-6 relative">
       {/* Page Content View Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -151,7 +155,7 @@ export default function Purchase() {
 
       {/* Main Global Ledger Presentation Grid Layer */}
       <div className="bg-white border border-slate-100 shadow-xl rounded-[24px] overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-50 flex justify-between items-center">
+        <div className="px-6 py-4 border-b border-slate-50 flex justify-between items-center bg-white">
           <h2 className="text-sm font-black text-brand-900 uppercase tracking-wider">
             Purchase History Index
           </h2>
@@ -161,12 +165,7 @@ export default function Purchase() {
         </div>
 
         <div className="overflow-x-auto">
-          {fetchLoading ? (
-            <div className="p-12 flex items-center justify-center gap-2 text-slate-400 font-medium text-sm">
-              <Loader2 size={16} className="animate-spin text-brand-500" />{" "}
-              Connecting to transaction server...
-            </div>
-          ) : purchaseHistory.length === 0 ? (
+          {purchaseHistory.length === 0 && !fetchLoading ? (
             <div className="p-12 text-center text-slate-400 font-medium text-sm">
               No recorded procurement logs inside this global database channel.
             </div>
@@ -199,7 +198,7 @@ export default function Purchase() {
                       {item?.supplier?.name}
                     </td>
                     <td className="p-4 text-slate-600 font-medium">
-                      {item?.product?.name}
+                      {item?.product?.name || item?.product?.title}
                     </td>
                     <td className="p-4 text-center font-bold text-slate-700">
                       {item.quantity}
@@ -215,11 +214,19 @@ export default function Purchase() {
         </div>
       </div>
 
-      {/* ================= INLINE PROCUREMENT MODAL LAYER ================= */}
+      {fetchLoading && (
+        <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] z-20 flex flex-col items-center justify-center gap-3">
+          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest animate-pulse">
+            Sync Data...
+          </p>
+        </div>
+      )}
+
+      {/* ================= INLINE ENTRY MODAL LAYER ================= */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-brand-900/20 backdrop-blur-md animate-in fade-in duration-300">
           <div className="bg-white w-full max-w-2xl rounded-[24px] sm:rounded-[32px] border border-slate-100 shadow-2xl overflow-hidden relative max-h-[95vh] overflow-y-auto">
-            <div className="px-5 py-4 sm:px-8 sm:py-5 border-b border-slate-50 flex justify-between items-center bg-slate-50/50 sticky top-0 bg-white z-10">
+            <div className="px-5 py-4 sm:px-8 sm:py-5 border-b border-slate-50 flex justify-between items-center bg-white sticky top-0 z-10">
               <div>
                 <h2 className="text-base font-black text-brand-900 tracking-tight">
                   Record Stock Purchase
@@ -416,6 +423,7 @@ export default function Purchase() {
                 </div>
               </div>
 
+              {/* Total Invoice Aggregation Summary */}
               <div className="p-4 bg-slate-900 text-white rounded-2xl flex items-center justify-between border border-slate-800 shadow-inner mt-2">
                 <div className="flex items-center gap-2.5">
                   <div className="p-2 bg-white/10 rounded-xl text-brand-400">
@@ -431,10 +439,7 @@ export default function Purchase() {
                   </div>
                 </div>
                 <div className="text-xl sm:text-2xl font-black tracking-tight text-emerald-400">
-                  ৳
-                  {formData.totalPrice
-                    ? Number(formData.totalPrice).toLocaleString()
-                    : "0"}
+                  ৳{computedTotalPrice.toLocaleString()}
                 </div>
               </div>
 

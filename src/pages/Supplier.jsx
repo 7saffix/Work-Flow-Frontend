@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { UserCheck, Phone, MapPin, Mail, Save, Plus, X } from "lucide-react";
 import api from "../redux/instance";
 import { setSuppliersData } from "../redux/productSlice";
-import Loader from "../component/Loader";
 
 export default function Suppliers() {
   const dispatch = useDispatch();
@@ -60,7 +59,7 @@ export default function Suppliers() {
   };
 
   return (
-    <div className="p-4 sm:p-6 max-w-7xl mx-auto space-y-6">
+    <div className="p-4 sm:p-6 max-w-7xl mx-auto space-y-6 relative">
       {/* View Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -79,6 +78,14 @@ export default function Suppliers() {
         </button>
       </div>
 
+      {fetchLoading && (
+        <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] z-20 flex flex-col items-center justify-center gap-3">
+          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest animate-pulse">
+            Sync Data...
+          </p>
+        </div>
+      )}
+
       {/* Main Data Feed Table Card */}
       <div className="bg-white border border-slate-100 shadow-xl rounded-[24px] overflow-hidden">
         <div className="px-6 py-4 border-b border-slate-50 flex justify-between items-center">
@@ -91,11 +98,7 @@ export default function Suppliers() {
         </div>
 
         <div className="overflow-x-auto">
-          {fetchLoading ? (
-            <div className="absolute inset-0  z-20 flex items-center justify-center ">
-              <Loader />
-            </div>
-          ) : suppliers.length === 0 ? (
+          {suppliers.length === 0 ? (
             <div className="p-12 text-center text-slate-400 font-medium text-sm">
               No suppliers registered in index directory.
             </div>

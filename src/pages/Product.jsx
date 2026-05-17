@@ -312,7 +312,6 @@ export default function Products() {
             </p>
           </div>
         )}
-
         {/* Pagination Section controls */}
         {!loading && (
           <div className="p-6 bg-slate-50/50 border-t border-slate-100 flex items-center justify-between">
