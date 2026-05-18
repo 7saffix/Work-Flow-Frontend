@@ -12,7 +12,7 @@ export default function Categories() {
   const dispatch = useDispatch();
 
   const categories = useSelector((state) => state.products.categories);
-  const loading = useSelector((state) => state.products.loading);
+  // const loading = useSelector((state) => state.products.loading);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ name: "" });
@@ -129,13 +129,13 @@ export default function Categories() {
           </table>
         </div>
 
-        {loading && (
+        {/* {loading && (
           <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] z-20 flex flex-col items-center justify-center gap-3">
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest animate-pulse">
               Sync Data...
             </p>
           </div>
-        )}
+        )}*/}
       </div>
 
       {/* Creation Modal */}

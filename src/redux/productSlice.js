@@ -10,6 +10,7 @@ const productSlice = createSlice({
     customers: [],
     purchases: [],
     sales: [],
+    returns: [],
     stats: null,
     totalPages: 1,
     loading: false,
@@ -42,6 +43,9 @@ const productSlice = createSlice({
     setSalesData: (state, action) => {
       state.sales = action.payload;
     },
+    setReturnsData: (state, action) => {
+      state.returns = action.payload;
+    },
     setProductLoading: (state, action) => {
       state.loading = action.payload;
     },
@@ -73,6 +77,7 @@ export const {
   setSuppliersData,
   setPurchasesData,
   setSalesData,
+  setReturnsData,
   setProductLoading,
   addProduct,
   addBrand,

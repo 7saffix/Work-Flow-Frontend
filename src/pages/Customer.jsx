@@ -137,14 +137,14 @@ export default function Customers() {
           )}
         </div>
       </div>
-
+      {/* 
       {fetchLoading && (
         <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] z-20 flex flex-col items-center justify-center gap-3">
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest animate-pulse">
             Sync Data...
           </p>
         </div>
-      )}
+      )} */}
 
       {/* ================= INLINE MODAL WINDOW MARKUP ================= */}
       {isOpen && (

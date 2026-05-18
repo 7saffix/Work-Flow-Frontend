@@ -14,7 +14,7 @@ export default function Brands() {
   const dispatch = useDispatch();
 
   const brands = useSelector((state) => state.products?.brands) || [];
-  const loading = useSelector((state) => state.products?.loading) || false;
+  // const loading = useSelector((state) => state.products?.loading) || false;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -114,13 +114,13 @@ export default function Brands() {
           </table>
         </div>
 
-        {loading && (
+        {/* {loading && (
           <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] z-20 flex flex-col items-center justify-center gap-3">
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest animate-pulse">
               Sync Data...
             </p>
           </div>
-        )}
+        )} */}
       </div>
 
       {/* Render the Separate Modal Component */}

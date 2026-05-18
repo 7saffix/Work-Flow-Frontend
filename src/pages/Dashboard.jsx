@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import {
   TrendingUp,
@@ -48,18 +49,18 @@ export default function Dashboard() {
     fetchDashboard();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-[60vh]">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-brand-100 border-t-brand-500 rounded-full animate-spin"></div>
-          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest animate-pulse">
-            Initializing Data...
-          </p>
-        </div>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="flex items-center justify-center h-[60vh]">
+  //       <div className="flex flex-col items-center gap-3">
+  //         <div className="w-10 h-10 border-4 border-brand-100 border-t-brand-500 rounded-full animate-spin"></div>
+  //         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest animate-pulse">
+  //           Initializing Data...
+  //         </p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   const summary = data?.summary || {};
   const salesChart = data?.charts?.salesChart || [];

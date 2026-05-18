@@ -304,14 +304,14 @@ export default function Products() {
         </div>
 
         {/* Full Table Absolute Loading Blur Overlay (Keeps UI stable, doesn't bounce layouts) */}
-        {loading && (
+        {/* {loading && (
           <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] z-20 flex flex-col items-center justify-center gap-3">
             <div className="w-10 h-10 border-4 border-brand-100 border-t-brand-500 rounded-full animate-spin"></div>
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest animate-pulse">
               Sync Data...
             </p>
           </div>
-        )}
+        )} */}
         {/* Pagination Section controls */}
         {!loading && (
           <div className="p-6 bg-slate-50/50 border-t border-slate-100 flex items-center justify-between">
