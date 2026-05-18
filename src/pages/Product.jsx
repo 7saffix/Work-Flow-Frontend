@@ -4,7 +4,6 @@ import {
   Plus,
   Search,
   Edit3,
-  Trash2,
   Box,
   ChevronLeft,
   ChevronRight,
@@ -26,7 +25,7 @@ export default function Products() {
   const stats = useSelector((state) => state.products?.stats) || null;
   const totalPages = useSelector((state) => state.products?.totalPages) || 1;
   const loading = useSelector((state) => state.products?.loading) || false;
-
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [filters, setFilters] = useState({
     page: 1,
     limit: 5,
@@ -215,6 +214,9 @@ export default function Products() {
                 <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
                   Stock
                 </th>
+                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+                  Status
+                </th>
                 <th className="px-6 py-5 text-right text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
                   Actions
                 </th>
@@ -287,12 +289,30 @@ export default function Products() {
                       )}
                     </td>
                     <td className="px-6 py-5 whitespace-nowrap">
+                      {item.isActive ? (
+                        <div>
+                          <p className="text-[10px] font-black uppercase text-emerald-600">
+                            Active
+                          </p>
+                        </div>
+                      ) : (
+                        <div>
+                          <p className="text-[10px] font-black uppercase text-amber-500">
+                            InActive
+                          </p>
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-6 py-5 whitespace-nowrap">
                       <div className="flex items-center justify-end gap-2">
-                        <button className="p-2 hover:bg-blue-50 text-slate-400 hover:text-blue-600 rounded-xl transition-all">
+                        <button
+                          onClick={() => {
+                            setSelectedProduct(item);
+                            setIsModalOpen(true);
+                          }}
+                          className="p-2 hover:bg-blue-50 text-slate-400 hover:text-blue-600 rounded-xl transition-all"
+                        >
                           <Edit3 size={18} />
-                        </button>
-                        <button className="p-2 hover:bg-red-50 text-slate-400 hover:text-red-500 rounded-xl transition-all">
-                          <Trash2 size={18} />
                         </button>
                       </div>
                     </td>
@@ -367,8 +387,13 @@ export default function Products() {
       {/* Product Creation Drawer Modal */}
       <ProductModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        key={selectedProduct?._id || "create-new-entry"}
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedProduct(null);
+        }}
         onSuccess={() => fetchProducts(filters)}
+        productData={selectedProduct}
       />
     </div>
   );
