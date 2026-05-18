@@ -14,6 +14,7 @@ import Customers from "./pages/Customer";
 import Purchase from "./pages/Purchase";
 import Sell from "./pages/Sell";
 import Return from "./pages/Return";
+import Expense from "./pages/Expense";
 
 function App() {
   const isInitializing = useGetProfile();
@@ -45,6 +46,7 @@ function App() {
           <Route path="/purchase" element={<Purchase />} />
           <Route path="/sell" element={<Sell />} />
           <Route path="/return" element={<Return />} />
+          <Route path="/expense" element={<Expense />} />
         </Route>
 
         {/* Catch-all */}

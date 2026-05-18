@@ -11,6 +11,8 @@ const productSlice = createSlice({
     purchases: [],
     sales: [],
     returns: [],
+    expenses: [],
+    expenseTypes: [],
     stats: null,
     totalPages: 1,
     loading: false,
@@ -46,6 +48,12 @@ const productSlice = createSlice({
     setReturnsData: (state, action) => {
       state.returns = action.payload;
     },
+    setExpensesData: (state, action) => {
+      state.expenses = action.payload;
+    },
+    setExpenseTypesData: (state, action) => {
+      state.expenseTypes = action.payload;
+    },
     setProductLoading: (state, action) => {
       state.loading = action.payload;
     },
@@ -78,6 +86,8 @@ export const {
   setPurchasesData,
   setSalesData,
   setReturnsData,
+  setExpensesData,
+  setExpenseTypesData,
   setProductLoading,
   addProduct,
   addBrand,

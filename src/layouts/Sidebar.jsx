@@ -19,12 +19,12 @@ const menuItems = [
   { name: "Purchase", path: "/purchase", icon: ShoppingCart },
   { name: "Sell", path: "/sell", icon: TrendingUp },
   { name: "Return", path: "/return", icon: Undo2 },
+  { name: "Expense", path: "/expense", icon: Wallet },
+  { name: "Report", path: "/report", icon: FileBarChart },
   { name: "Brand", path: "/brand", icon: Package },
   { name: "Category", path: "/category", icon: Layers },
   { name: "Supplier", path: "/supplier", icon: Users },
   { name: "Customer", path: "/customer", icon: UserSquare2 },
-  { name: "Expense", path: "/expense", icon: Wallet },
-  { name: "Report", path: "/report", icon: FileBarChart },
 ];
 
 export default function Sidebar({ isOpen, toggleSidebar }) {
